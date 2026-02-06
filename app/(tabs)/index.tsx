@@ -1,3 +1,5 @@
+import { getPopularMovies } from "@/api/movies";
+import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, View } from "react-native";
 
 const MovieCard = ({ image, title }: { image: string; title: string }) => {
@@ -15,6 +17,17 @@ const MovieCard = ({ image, title }: { image: string; title: string }) => {
 };
 
 export default function MoviesScreen() {
+  const [popularMovies, setPopularMovies] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchPopularMovies();
+  }, []);
+
+  const fetchPopularMovies = async () => {
+    const fetchedPopularMovies = await getPopularMovies();
+    setPopularMovies(fetchedPopularMovies);
+  };
+
   return (
     <View>
       <Text>MOST POPULAR MOVIES</Text>
