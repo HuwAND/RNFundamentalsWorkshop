@@ -17,7 +17,7 @@ const MovieCard = () => {
 export default function MoviesScreen() {
   return (
     <View>
-      <Text>Movies Tab</Text>
+      <Text>MOST POPULAR MOVIES</Text>
       <ScrollView horizontal>
         <MovieCard />
         <MovieCard />
