@@ -1,4 +1,24 @@
-const popularMovies = [
+export interface PopularMovie {
+  id: number;
+  posterImage: string;
+  bannerImage: string;
+  title: string;
+  duration: string;
+  releaseDate: string;
+  director: string;
+  boxOffice: string;
+  storyline: string;
+}
+
+export interface AllMovie {
+  image: string;
+  title: string;
+  characters: string;
+  genre: string;
+  release: string;
+}
+
+const popularMovies: PopularMovie[] = [
   {
     id: 1,
     posterImage:
@@ -85,7 +105,7 @@ const popularMovies = [
   },
 ];
 
-const allMovies = [
+const allMovies: AllMovie[] = [
   {
     image:
       "https://m.media-amazon.com/images/M/MV5BMmVmODY1MzEtYTMwZC00MzNhLWFkNDMtZjAwM2EwODUxZTA5XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg",
@@ -120,14 +140,16 @@ const allMovies = [
   },
 ];
 
-export const getPopularMovies = () => {
+export const getPopularMovies = (): Promise<PopularMovie[]> => {
   return Promise.resolve(popularMovies);
 };
 
-export const getAllMovies = () => {
+export const getAllMovies = (): Promise<AllMovie[]> => {
   return Promise.resolve(allMovies);
 };
 
-export const getIndividualMovie = (id: number) => {
+export const getIndividualMovie = (
+  id: number,
+): Promise<PopularMovie | undefined> => {
   return Promise.resolve(popularMovies.find((movie) => movie.id === id));
 };

@@ -1,4 +1,4 @@
-import { getPopularMovies } from "@/api/movies";
+import { getPopularMovies, PopularMovie } from "@/api/movies";
 import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, View } from "react-native";
 
@@ -17,7 +17,7 @@ const MovieCard = ({ image, title }: { image: string; title: string }) => {
 };
 
 export default function MoviesScreen() {
-  const [popularMovies, setPopularMovies] = useState<any[]>([]);
+  const [popularMovies, setPopularMovies] = useState<PopularMovie[]>([]);
 
   useEffect(() => {
     fetchPopularMovies();
