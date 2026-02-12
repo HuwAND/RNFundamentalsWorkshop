@@ -3,12 +3,18 @@ import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
 export default function RootLayout() {
+  const isAuthenticated = true;
+
   return (
-    <>
-      <Stack>
+    <Stack>
+      <Stack.Protected guard={!isAuthenticated}>
+        <Stack.Screen name="login" options={{ headerShown: false }} />
+      </Stack.Protected>
+
+      <Stack.Protected guard={isAuthenticated}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
+      </Stack.Protected>
       <StatusBar style="auto" />
-    </>
+    </Stack>
   );
 }
