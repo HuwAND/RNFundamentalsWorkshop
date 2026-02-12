@@ -1,9 +1,5 @@
-import { Text, View } from "react-native";
+import Movie from "@/components/Movie";
 
 export default function TabTwoScreen() {
-  return (
-    <View>
-      <Text>Explore Tab</Text>
-    </View>
-  );
+  return <Movie />;
 }
