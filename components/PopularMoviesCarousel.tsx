@@ -1,9 +1,15 @@
 import { getPopularMovies, PopularMovie } from "@/api/movies";
 import { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import { MovieCard } from "./MovieCard";
 
-export const PopularMoviesCarousel = () => {
+interface PopularMoviesCarouselProps {
+  onMoviePress: (id: number) => void;
+}
+
+export const PopularMoviesCarousel = ({
+  onMoviePress,
+}: PopularMoviesCarouselProps) => {
   const [popularMovies, setPopularMovies] = useState<PopularMovie[]>([]);
 
   useEffect(() => {
@@ -23,7 +29,9 @@ export const PopularMoviesCarousel = () => {
         contentContainerStyle={styles.carouselContainer}
         data={popularMovies}
         renderItem={({ item }) => (
-          <MovieCard title={item.title} image={item.bannerImage} />
+          <Pressable onPress={() => onMoviePress(item.id)}>
+            <MovieCard title={item.title} image={item.bannerImage} />
+          </Pressable>
         )}
       />
     </View>
