@@ -2,6 +2,7 @@ import {
   AuthorisationProvider,
   useAuthorisation,
 } from "@/context/AuthorisationContext";
+import { FavouritesProvider } from "@/context/FavouritesContext";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
@@ -25,7 +26,9 @@ function NavigationStack() {
 export default function RootLayout() {
   return (
     <AuthorisationProvider>
-      <NavigationStack />
+      <FavouritesProvider>
+        <NavigationStack />
+      </FavouritesProvider>
     </AuthorisationProvider>
   );
 }

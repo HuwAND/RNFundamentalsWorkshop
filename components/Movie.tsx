@@ -1,6 +1,7 @@
 import { PopularMovie } from "@/api/movies";
+import { useFavourites } from "@/context/FavouritesContext";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 interface MovieProps {
   movie: PopularMovie;
@@ -8,6 +9,7 @@ interface MovieProps {
 
 const Movie = ({ movie }: MovieProps) => {
   const {
+    id,
     bannerImage,
     posterImage,
     releaseDate,
@@ -15,6 +17,12 @@ const Movie = ({ movie }: MovieProps) => {
     boxOffice,
     storyline,
   } = movie;
+
+  const { addFavourite } = useFavourites();
+
+  const setFavourite = () => {
+    addFavourite(String(id));
+  };
 
   const MetaData = ({ title, value }: { title: string; value: string }) => (
     <View style={styles.metaDataContainer}>
@@ -37,6 +45,16 @@ const Movie = ({ movie }: MovieProps) => {
             <Text>{movie.duration}</Text>
           </View>
         </View>
+
+        <Pressable
+          style={({ pressed }) => [
+            styles.favouriteButton,
+            pressed && styles.favouriteButtonPressed,
+          ]}
+          onPress={setFavourite}
+        >
+          <Text>Set Favourite</Text>
+        </Pressable>
 
         <View style={styles.marginTop}>
           <MetaData title="Release date" value={releaseDate} />
@@ -81,7 +99,16 @@ const styles = StyleSheet.create({
   bold: {
     fontWeight: "bold",
   },
-  filmTitle: {},
+  favouriteButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: "lightgray",
+    alignSelf: "flex-start",
+    borderRadius: 5,
+  },
+  favouriteButtonPressed: {
+    backgroundColor: "red",
+  },
   filmInfoContainer: {
     flexDirection: "row",
     alignItems: "center",
