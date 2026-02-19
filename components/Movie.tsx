@@ -1,35 +1,20 @@
-import { getIndividualMovie, PopularMovie } from "@/api/movies";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { PopularMovie } from "@/api/movies";
+import React from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
 
-const Movie = () => {
-  const router = useRouter();
-  const { id } = useLocalSearchParams();
+interface MovieProps {
+  movie: PopularMovie;
+}
 
-  const [movie, setMovie] = useState<PopularMovie>();
-
-  useEffect(() => {
-    const idAsNumber = Number(id);
-    console.log("ID", idAsNumber);
-    if (!idAsNumber) {
-      fetchIndividualMovie(1);
-    } else {
-      fetchIndividualMovie(idAsNumber);
-    }
-  }, [id]);
-
-  const fetchIndividualMovie = async (id: number) => {
-    const individualMovie = await getIndividualMovie(id);
-    setMovie(individualMovie);
-  };
+const Movie = ({ movie }: MovieProps) => {
+  const {
+    bannerImage,
+    posterImage,
+    releaseDate,
+    director,
+    boxOffice,
+    storyline,
+  } = movie;
 
   const MetaData = ({ title, value }: { title: string; value: string }) => (
     <View style={styles.metaDataContainer}>
@@ -38,42 +23,33 @@ const Movie = () => {
     </View>
   );
 
-  if (!movie) {
-    return;
-  }
-
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <Image source={{ uri: movie.bannerImage }} style={styles.bannerImage} />
+    <View>
+      <Image source={{ uri: bannerImage }} style={styles.bannerImage} />
 
-        <View style={styles.container}>
-          <View style={styles.filmInfoContainer}>
-            <>
-              <Image
-                source={{ uri: movie.posterImage }}
-                style={styles.posterImage}
-              />
-            </>
-            <View style={styles.filmInfo}>
-              <Text style={styles.bold}>{movie.title}</Text>
-              <Text>{movie.duration}</Text>
-            </View>
-          </View>
-
-          <View style={styles.marginTop}>
-            <MetaData title="Release date" value={movie.releaseDate} />
-            <MetaData title="Director" value={movie.director} />
-            <MetaData title="Box Offie" value={movie.boxOffice} />
-          </View>
-
-          <View style={styles.marginTop}>
-            <Text style={styles.bold}>STORYLINE</Text>
-            <Text>{movie.storyline}</Text>
+      <View style={styles.container}>
+        <View style={styles.filmInfoContainer}>
+          <>
+            <Image source={{ uri: posterImage }} style={styles.posterImage} />
+          </>
+          <View style={styles.filmInfo}>
+            <Text style={styles.bold}>{movie.title}</Text>
+            <Text>{movie.duration}</Text>
           </View>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+
+        <View style={styles.marginTop}>
+          <MetaData title="Release date" value={releaseDate} />
+          <MetaData title="Director" value={director} />
+          <MetaData title="Box Offie" value={boxOffice} />
+        </View>
+
+        <View style={styles.marginTop}>
+          <Text style={styles.bold}>STORYLINE</Text>
+          <Text>{storyline}</Text>
+        </View>
+      </View>
+    </View>
   );
 };
 
@@ -81,6 +57,15 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     marginTop: -50,
+  },
+  backButton: {
+    position: "absolute",
+    top: 20,
+    left: 20,
+    zIndex: 1,
+    padding: 10,
+    backgroundColor: "white",
+    borderRadius: 5,
   },
   bannerImage: {
     width: "100%",

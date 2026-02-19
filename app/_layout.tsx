@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
 export default function RootLayout() {
-  const isAuthenticated = false;
+  const isAuthenticated = true;
 
   return (
     <Stack>
