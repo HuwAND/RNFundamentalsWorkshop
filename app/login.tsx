@@ -1,3 +1,4 @@
+import { useAuthorisation } from "@/context/AuthorisationContext";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
@@ -5,8 +6,10 @@ export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { setIsAuthorised } = useAuthorisation();
+
   const onLoginPress = () => {
-    console.log(email, password);
+    setIsAuthorised(true);
   };
 
   return (
@@ -67,6 +70,11 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 5,
   },
-  button: { backgroundColor: "red", padding: 10, marginTop: 20 },
+  button: {
+    backgroundColor: "red",
+    padding: 10,
+    marginTop: 20,
+    borderRadius: 5,
+  },
   buttonText: { color: "white", textAlign: "center", fontWeight: "bold" },
 });
